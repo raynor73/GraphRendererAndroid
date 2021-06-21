@@ -37,6 +37,8 @@ class GraphView @JvmOverloads constructor(
 
     private var prevTimestamp: Long? = null
 
+    var listener: Listener? = null
+
     init {
         nodePaint.color = NODE_COLOR
         nodePaint.style = Paint.Style.FILL
@@ -99,6 +101,8 @@ class GraphView @JvmOverloads constructor(
                         event.y < transformedPositionY + NODE_RADIUS
                     ) {
                         node.isSelected = !node.isSelected
+
+                        post { listener?.onNodeClicked(node) }
                     }
                 }
 
@@ -235,5 +239,10 @@ class GraphView @JvmOverloads constructor(
         private const val MAX_CONNECTED_NODES_DISTANCE = 100f
         private const val MAX_FORCE_DISTANCE = 40f
         private const val NODES_VELOCITY = 50f
+    }
+
+    interface Listener {
+
+        fun onNodeClicked(node: RenderableNode)
     }
 }
