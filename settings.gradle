@@ -1,0 +1,2 @@
+rootProject.name = "Graph Renderer"
+include ':app'
